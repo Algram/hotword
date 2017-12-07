@@ -71,3 +71,5 @@ alter the hotword.service file to the path of your hotword.py file
 
 hotword starts a snips session using sessionStart and passing in the customData object the name of the person who said the hotword
 ![](https://github.com/oziee/hotword/blob/master/images/mqtt.jpg?raw=true)
+
+You can see in the image the customData has a value of the persons name who was talking

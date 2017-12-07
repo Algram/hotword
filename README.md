@@ -30,6 +30,8 @@ the clients have only Snips-Audio-Server installed and running Each client has e
 
 the server does the hard work it has Snips-Audio-Server, Snips-ASR, Snips-Dialogue, Snips-Queries -The server uses the custom hotword code here on github -It listens for the hotword "hey janet" to activate -When it hears "hey janet" it also does a speaker identification using the altered piwho code included.. I altered the code from the standard audio having to be 8khz to 16khz to keep with the snips audio so that it stays fast instead of having to convert the audio down from 16>8khz
 
+For me I just placed all the files inside the snowboy/examples/python directory for convenience 
+
 # Piwho Altered
 
 i have altered and recompiled the java files and also the piwho python code to use 16khz and not 8khz to keep inline with snips audio and so time is not wasted converting 16->8khz, keeps it fast

@@ -4,24 +4,24 @@ Hotword detector for Snips
 https://github.com/snipsco/snips-platform-documentation
 
 uses snowboy https://github.com/Kitt-AI/snowboy 
--you can build your own hotword or use one from the many already created https://snowboy.kitt.ai (login to access)
--install and built it yourself
--or get pre-compiled binaries from https://github.com/Kitt-AI/snowboy#precompiled-binaries-with-python-demo
--place the pmdl file with the hotword.py file (this is the hotword model file)
+- you can build your own hotword or use one from the many already created https://snowboy.kitt.ai (login to access)
+- install and built it yourself
+- or get pre-compiled binaries from https://github.com/Kitt-AI/snowboy#precompiled-binaries-with-python-demo
+- place the pmdl file with the hotword.py file (this is the hotword model file)
 
 
 Piwho https://github.com/Adirockzz95/Piwho
--used for "speaker identification".. who said the hotword
--you train up users (min of 2 needed to work)
--the two trained files created by the train.py file need to be with the pmdl and hotword.py files
--requires "pip install watchdog"
+- used for "speaker identification".. who said the hotword
+- you train up users (min of 2 needed to work)
+- the two trained files created by the train.py file need to be with the pmdl and hotword.py files
+- requires "pip install watchdog"
 
 Pytoml pip install pytoml
--used to read the snips.toml file for properties
+- used to read the snips.toml file for properties
 
 paho mqtt client pip install paho-mqtt
--MQTT !!!
--In hotword.py change the MQTT info to your address and port if its not set in the toml file
+- MQTT !!!
+- In hotword.py change the MQTT info to your address and port if its not set in the toml file
 
 
 # my snips setup
@@ -40,15 +40,15 @@ for piwho a min of 2 users is needed for it to work
 i used the vad.py from piwho to create the audio files
 i use folder name as persons name and within place their audio files
 
-\Base Folder
-\train.py
----\Bob
--------\ file1.wav 
--------\ file2.wav 
--------\ file3.wav
----\Tim 
--------\file1.wav 
--------\file2.wav
+- \Base Folder
+- \train.py
+- --\Bob
+- ------\ file1.wav 
+- ------\ file2.wav 
+- ------\ file3.wav
+- --\Tim 
+- ------\file1.wav 
+- ------\file2.wav
 
 i then use the train.py in the base folder to build the training data for piwho
 two files are created speakers.txt and something like marf.Storage.TrainingSet.70016000.0.0.0.103.300.2.20.gzbin -these two files need to be with the hotword.py file
@@ -59,9 +59,9 @@ I have stopped and disabled the snips-hotword server
 sudo systemctl stop snips-hotword && sudo systemctl disable snips-hotword
 
 alter the hotword.service file to the path of your hotword.py file
--copy the hotword.service file into the /lib/systemd/system/ folder and change to chmod 775
--reboot
--sudo systemctl enable hotword && sudo systemctl start -hotword
+- copy the hotword.service file into the /lib/systemd/system/ folder and change to chmod 775
+- reboot
+- sudo systemctl enable hotword && sudo systemctl start -hotword
 
 hotword starts a snips session using sessionStart and passing in the customData object the name of the person who said the hotword
 ![](https://github.com/oziee/hotword/blob/master/images/mqtt.jpg?raw=true)

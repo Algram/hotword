@@ -23,14 +23,14 @@ paho mqtt client pip install paho-mqtt
 -In hotword.py change the MQTT info to your address and port if its not set in the toml file
 
 
-#my snips setup
+# my snips setup
 I use the Snips as Client/Server 
 
 the clients have only Snips-Audio-Server installed and running Each client has either a Respeaker 4mic or 2mic HAT for listening mics and LEDs these also have custom code listening on mqtt for ques on when to turn their LED's on/off
 
 the server does the hard work it has Snips-Audio-Server, Snips-ASR, Snips-Dialogue, Snips-Queries -The server uses the custom hotword code here on github -It listens for the hotword "hey janet" to activate -When it hears "hey janet" it also does a speaker identification using the altered piwho code included.. I altered the code from the standard audio having to be 8khz to 16khz to keep with the snips audio so that it stays fast instead of having to convert the audio down from 16>8khz
 
-#Piwho Altered
+# Piwho Altered
 
 i have altered and recompiled the java files and also the piwho python code to use 16khz and not 8khz to keep inline with snips audio and so time is not wasted converting 16->8khz, keeps it fast
 for piwho a min of 2 users is needed for it to work
@@ -51,7 +51,7 @@ i then use the train.py in the base folder to build the training data for piwho
 two files are created speakers.txt and something like marf.Storage.TrainingSet.70016000.0.0.0.103.300.2.20.gzbin -these two files need to be with the hotword.py file
 
 
-#turnign on
+# turnign on
 I have stopped and disabled the snips-hotword server
 sudo systemctl stop snips-hotword && sudo systemctl disable snips-hotword
 

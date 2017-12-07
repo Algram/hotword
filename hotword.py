@@ -20,18 +20,21 @@ clientList = []
 allowedClientList = []
 SENSITIVITY = 0.5
 HOTWORD_SNOWBOY_FILE = dir + '/Hey_Janet.pmdl'
+HOTWORD_ID = 'default'
 MQTT_ADDRESS = '10.0.1.22'  #default just incase its not enabld in the toml file
 MQTT_PORT = '1883'
 
-
-path = '/etc/snips.toml'
+path = '/Users/gregbail/XCodeProjects/GITHUB/snowboy/examples/Python/snips.toml'
 
 if os.path.isfile(path):
     with open(path) as datafile:
         data = pytoml.load(datafile)
-        snipsClients = data['snips-hotword']['audio']
-        for sc in snipsClients:
-            allowedClientList.append(sc.split('@')[0])
+        if 'audio' in data['snips-hotword']:
+            snipsClients = data['snips-hotword']['audio']
+            for sc in snipsClients:
+                allowedClientList.append(sc.split('@')[0])
+        if 'hotword_id' in data['snips-hotword']:
+            HOTWORD_ID = data['snips-hotword']['hotword_id']
         if 'sensitivity' in data['snips-hotword']:
             SENSITIVITY = data['snips-hotword']['sensitivity']
         if 'mqtt' in data['snips-common']:
@@ -40,7 +43,7 @@ if os.path.isfile(path):
             MQTT_PORT = mqttstring.split(':')[1]
 else:
     #add something just incase it fails
-    allowedClientList.append("default")
+    allowedClientList.append("zero")
 
 detection = snowboydecoder.HotwordDetector(HOTWORD_SNOWBOY_FILE, sensitivity=SENSITIVITY)
 
@@ -96,6 +99,9 @@ def on_message(client, userdata, msg):
             if ans == 1:
                 record[siteId] = True
 
+                #inform that the hotword has been detected
+                client.publish('hermes/hotword/{}/detected'.format(HOTWORD_ID), payload="{\"siteId\":\"" + siteId + "\"}", qos=0)
+
                 waveFile = wave.open( siteId + '_id.wav', 'wb')
                 waveFile.setnchannels(1)
                 waveFile.setsampwidth(2)
@@ -103,8 +109,6 @@ def on_message(client, userdata, msg):
                 waveFile.writeframes(client_recognition[siteId].get()) 
                 waveFile.close()
                 speaker = recog.identify_speaker(siteId + '_id.wav')[0]
-
-                
 
                 action = "{\"type\":\"action\",\"text\":null,\"canBeEnqueued\":false,\"intentFilter\":null}"
                 jsonString = "{\"siteId\":\"" + siteId + "\",\"init\":" + action + ",\"customData\":\"" + speaker + "\"}"
@@ -143,4 +147,3 @@ if __name__ == '__main__':
     mqtt_client.on_message = on_message
     mqtt_client.connect(MQTT_ADDRESS, int(MQTT_PORT))
     mqtt_client.loop_forever()
-

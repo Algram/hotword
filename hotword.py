@@ -8,7 +8,7 @@ import json
 import time
 import collections
 import pytoml
-import recognition
+from piwho import recognition
 import os.path
 
 mqtt_client = mqtt.Client()
@@ -24,7 +24,7 @@ MQTT_ADDRESS = '10.0.1.22'  #default just incase its not enabld in the toml file
 MQTT_PORT = '1883'
 
 
-path = '/etc/snips.toml'
+path = '/Users/gregbail/XCodeProjects/GITHUB/snowboy/examples/Python/snips.toml'
 
 if os.path.isfile(path):
     with open(path) as datafile:
@@ -96,13 +96,13 @@ def on_message(client, userdata, msg):
             if ans == 1:
                 record[siteId] = True
 
-                waveFile = wave.open( dir + '/' + siteId + '_id.wav', 'wb')
+                waveFile = wave.open( siteId + '_id.wav', 'wb')
                 waveFile.setnchannels(1)
                 waveFile.setsampwidth(2)
                 waveFile.setframerate(16000)
                 waveFile.writeframes(client_recognition[siteId].get()) 
                 waveFile.close()
-                speaker = recog.identify_speaker(dir + '/' + siteId + '_id.wav')[0]
+                speaker = recog.identify_speaker(siteId + '_id.wav')[0]
 
                 
 

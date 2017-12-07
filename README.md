@@ -17,8 +17,6 @@ Piwho https://github.com/Adirockzz95/Piwho
 - requires "pip install watchdog"
 - You need to have JDK (min version: 1.7) installed on your Pi.
 
-.. code:: bash
-
     # verify jdk is installed
     $ java -version
 

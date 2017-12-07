@@ -1,0 +1,11 @@
+[Unit]
+Description=Snips Hotword service by me
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/python /home/pi/snowboy/examples/Python/hotword.py 2>/dev/null
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

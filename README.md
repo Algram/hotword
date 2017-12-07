@@ -9,19 +9,6 @@ uses snowboy https://github.com/Kitt-AI/snowboy
 - or get pre-compiled binaries from https://github.com/Kitt-AI/snowboy#precompiled-binaries-with-python-demo
 - place the pmdl file with the hotword.py file (this is the hotword model file)
 
-
-Piwho https://github.com/Adirockzz95/Piwho
-- used for "speaker identification".. who said the hotword
-- you train up users (min of 2 needed to work)
-- the two trained files created by the train.py file need to be with the pmdl and hotword.py files
-- requires "pip install watchdog"
-- You need to have JDK (min version: 1.7) installed on your Pi.
-
-..
-
-    # verify jdk is installed
-    $ java -version
-
 Pytoml pip install pytoml
 - used to read the snips.toml file for properties
 
@@ -39,7 +26,20 @@ the server does the hard work it has Snips-Audio-Server, Snips-ASR, Snips-Dialog
 
 For me I just placed all the files inside the snowboy/examples/python directory for convenience 
 
-# Piwho Altered
+# Piwho Altered - no need to install
+
+Piwho https://github.com/Adirockzz95/Piwho
+- used for "speaker identification".. who said the hotword
+- you train up users (min of 2 needed to work)
+- the two trained files created by the train.py file need to be with the pmdl and hotword.py files
+- requires "pip install watchdog"
+- You need to have JDK (min version: 1.7) installed on your Pi.
+
+..
+
+    # verify jdk is installed
+    $ java -version
+
 
 i have altered and recompiled the java files and also the piwho python code to use 16khz and not 8khz to keep inline with snips audio and so time is not wasted converting 16->8khz, keeps it fast
 for piwho a min of 2 users is needed for it to work

@@ -24,7 +24,7 @@ MQTT_ADDRESS = '10.0.1.22'  #default just incase its not enabld in the toml file
 MQTT_PORT = '1883'
 
 
-path = '/Users/gregbail/XCodeProjects/GITHUB/snowboy/examples/Python/snips.toml'
+path = '/etc/snips.toml'
 
 if os.path.isfile(path):
     with open(path) as datafile:

@@ -33,7 +33,7 @@ Piwho https://github.com/Adirockzz95/Piwho
 - you train up users (min of 2 needed to work)
 - the two trained files created by the train.py file need to be with the pmdl and hotword.py files
 - requires "pip install watchdog"
-- You need to have JDK (min version: 1.7) installed on your Pi.
+- **You need to have JAVA (min version: 1.8) installed.
 
 ..
 

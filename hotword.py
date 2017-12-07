@@ -8,23 +8,25 @@ import json
 import time
 import collections
 import pytoml
-from piwho import recognition
+import recognition
 import os.path
 
 mqtt_client = mqtt.Client()
 recog = recognition.SpeakerRecognizer()
 
+dir = os.path.dirname(os.path.abspath(__file__))
+
 clientList = []
 allowedClientList = []
 SENSITIVITY = 0.5
-HOTWORD_SNOWBOY_FILE = 'Hey_Janet.pmdl'
+HOTWORD_SNOWBOY_FILE = dir + '/Hey_Janet.pmdl'
 MQTT_ADDRESS = '10.0.1.22'  #default just incase its not enabld in the toml file
 MQTT_PORT = '1883'
+
 
 path = '/etc/snips.toml'
 
 if os.path.isfile(path):
-    #with open('/etc/snips.toml') as datafile:
     with open(path) as datafile:
         data = pytoml.load(datafile)
         snipsClients = data['snips-hotword']['audio']
@@ -34,8 +36,8 @@ if os.path.isfile(path):
             SENSITIVITY = data['snips-hotword']['sensitivity']
         if 'mqtt' in data['snips-common']:
             mqttstring = data['snips-common']['mqtt']
-            MQTT_ADDRESS = mqttstring(':')[0]
-            MQTT_PORT = mqttstring(':')[1]
+            MQTT_ADDRESS = mqttstring.split(':')[0]
+            MQTT_PORT = mqttstring.split(':')[1]
 else:
     #add something just incase it fails
     allowedClientList.append("default")
@@ -94,13 +96,13 @@ def on_message(client, userdata, msg):
             if ans == 1:
                 record[siteId] = True
 
-                waveFile = wave.open( siteId + '_id.wav', 'wb')
+                waveFile = wave.open( dir + '/' + siteId + '_id.wav', 'wb')
                 waveFile.setnchannels(1)
                 waveFile.setsampwidth(2)
                 waveFile.setframerate(16000)
                 waveFile.writeframes(client_recognition[siteId].get()) 
                 waveFile.close()
-                speaker = recog.identify_speaker(siteId + '_id.wav')[0]
+                speaker = recog.identify_speaker(dir + '/' + siteId + '_id.wav')[0]
 
                 
 
@@ -139,6 +141,6 @@ def on_message(client, userdata, msg):
 if __name__ == '__main__':
     mqtt_client.on_connect = on_connect
     mqtt_client.on_message = on_message
-    mqtt_client.connect(MQTT_ADDRESS, MQTT_PORT)
+    mqtt_client.connect(MQTT_ADDRESS, int(MQTT_PORT))
     mqtt_client.loop_forever()
 

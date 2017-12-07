@@ -1,4 +1,4 @@
-from piwho import recognition
+import recognition
 import os
 
 path = os.path.dirname(os.path.abspath(__file__))

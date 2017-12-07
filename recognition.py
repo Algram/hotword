@@ -19,7 +19,13 @@ from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 
 # module to setup data files
-from . import config
+MARF_DEFAULT = os.path.join(os.path.dirname(__file__), 'marf.jar')
+
+SPEAKER_RECOG_JAR = os.path.join(os.path.dirname(__file__),'Speaker.jar')
+# Do not change SPEAKER_DB
+SPEAKER_DB = os.path.abspath(os.path.join(os.path.dirname(__file__),'speakers.txt'))
+
+JAVA_MEM = '-Xmx100m '
 
 """
 Terminology:
@@ -111,8 +117,8 @@ class SpeakerRecognizer(object):
 
             # get result from process
             # start_subprocess returns a list
-            reply = self._start_subprocess('java ' + config.JAVA_MEM +
-                                           '-jar ' + config.SPEAKER_RECOG_JAR +
+            reply = self._start_subprocess('java ' + JAVA_MEM +
+                                           '-jar ' + SPEAKER_RECOG_JAR +
                                            ' --train ' + filepath +
                                            self.feature)
 
@@ -125,8 +131,8 @@ class SpeakerRecognizer(object):
                 self._convert_file(expand)
 
             self._create_entry(speakername, self.last_trained_file)
-            reply = self._start_subprocess('java ' + config.JAVA_MEM +
-                                           '-jar ' + config.SPEAKER_RECOG_JAR +
+            reply = self._start_subprocess('java ' + JAVA_MEM +
+                                           '-jar ' + SPEAKER_RECOG_JAR +
                                            ' --single-train ' + expand +
                                            self.feature)
 
@@ -151,8 +157,8 @@ class SpeakerRecognizer(object):
 
             self.last_trained_file = os.path.basename(newest)
             self._create_entry(speakername, self.last_trained_file)
-            reply = self._start_subprocess('java ' + config.JAVA_MEM +
-                                           '-jar ' + config.SPEAKER_RECOG_JAR +
+            reply = self._start_subprocess('java ' + JAVA_MEM +
+                                           '-jar ' + SPEAKER_RECOG_JAR +
                                            ' --single-train ' + newest +
                                            self.feature)
 
@@ -188,8 +194,8 @@ class SpeakerRecognizer(object):
 
         
         # handle this error
-        name = self._start_subprocess('java ' + config.JAVA_MEM +
-                                        '-jar ' + config.SPEAKER_RECOG_JAR +
+        name = self._start_subprocess('java ' + JAVA_MEM +
+                                        '-jar ' + SPEAKER_RECOG_JAR +
                                         ' --ident ' + expand + self.feature)
 
         self.scores = name[4:]

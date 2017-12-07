@@ -14,6 +14,7 @@ Piwho https://github.com/Adirockzz95/Piwho
 -used for "speaker identification".. who said the hotword
 -you train up users (min of 2 needed to work)
 -the two trained files created by the train.py file need to be with the pmdl and hotword.py files
+-requires "pip install watchdog"
 
 Pytoml pip install pytoml
 -used to read the snips.toml file for properties

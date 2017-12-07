@@ -51,7 +51,7 @@ i then use the train.py in the base folder to build the training data for piwho
 two files are created speakers.txt and something like marf.Storage.TrainingSet.70016000.0.0.0.103.300.2.20.gzbin -these two files need to be with the hotword.py file
 
 
-# turnign on
+# turning on
 I have stopped and disabled the snips-hotword server
 sudo systemctl stop snips-hotword && sudo systemctl disable snips-hotword
 

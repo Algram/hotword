@@ -67,7 +67,7 @@ sudo systemctl stop snips-hotword && sudo systemctl disable snips-hotword
 alter the hotword.service file to the path of your hotword.py file
 - copy the hotword.service file into the /lib/systemd/system/ folder and change to chmod 775
 - reboot
-- sudo systemctl enable hotword && sudo systemctl start -hotword
+- sudo systemctl enable hotword && sudo systemctl start hotword
 
 hotword starts a snips session using sessionStart and passing in the customData object the name of the person who said the hotword
 ![](https://github.com/oziee/hotword/blob/master/images/mqtt.jpg?raw=true)
